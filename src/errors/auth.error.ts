@@ -1,6 +1,6 @@
-import CustomError from "./custom.error";
+import { CustomError } from "./custom.error";
 
-export default class AuthError extends CustomError {
+export class AuthError extends CustomError {
   statusCode = 401;
 
   constructor(message: any) {
