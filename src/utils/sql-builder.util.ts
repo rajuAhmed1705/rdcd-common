@@ -132,6 +132,59 @@ export function buildUpdateWithWhereSql(
   return { sql, params };
 }
 
+export function buildUpsertSql(
+  tableName: string,
+  primaryKey: string,
+  data: Object,
+  updateFields?: {},
+  removeFromUpdateFields?: Array<string>
+) {
+  let attrs = "";
+  let paramsStr = "";
+
+  let insertQuery = `INSERT INTO ${tableName} `;
+
+  const snakeObject = toSnakeKeys(data);
+  const params: any[] = [];
+
+  let counter = 0;
+
+  for (const [k, v] of Object.entries(snakeObject)) {
+    attrs = attrs + `${k},`;
+    paramsStr = paramsStr + `$${++counter},`;
+    params.push(v);
+  }
+
+  insertQuery +=
+    `(${attrs.slice(0, -1)})` + " VALUES " + `(${paramsStr.slice(0, -1)})`;
+
+  const conflictQuery = ` ON CONFLICT (${primaryKey}) DO `;
+
+  let updateQuery = `UPDATE SET `;
+  let updateAttrs = "";
+
+  let updateObject = data;
+  delete updateObject[primaryKey as keyof Object];
+
+  removeFromUpdateFields?.map((field) => {
+    delete updateObject[field as keyof Object];
+  });
+
+  updateObject = { ...updateObject, ...updateFields };
+  let updateCounter = 1;
+
+  for (const [k, v] of Object.entries(toSnakeKeys(updateObject))) {
+    updateAttrs += `${k} = $${++updateCounter},`;
+  }
+
+  updateQuery += updateAttrs.slice(0, -1);
+
+  return {
+    sql: insertQuery + conflictQuery + updateQuery,
+    params,
+  };
+}
+
 export function buildTempToMainSql(
   tempTableName: string,
   mainTableName: string,
