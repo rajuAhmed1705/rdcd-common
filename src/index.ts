@@ -4,13 +4,12 @@ export * from "./errors/bad-request.error";
 export * from "./errors/custom.error";
 export * from "./errors/not-found.error";
 export * from "./errors/request-validation.error";
-
 //interfaces
 export * from "./interfaces/pagination.interface";
 export * from "./interfaces/sql-builder.interface";
-
 //utils
 export * from "./utils/build-sql.utils";
+export * from "./utils/html-escape.utils";
 export * from "./utils/is-json.utils";
 export * from "./utils/json-path.utils";
 export * from "./utils/matchKey.utils";
