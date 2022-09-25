@@ -7,6 +7,8 @@ export * from "./errors/request-validation.error";
 //interfaces
 export * from "./interfaces/pagination.interface";
 export * from "./interfaces/sql-builder.interface";
+//middleware
+export * from "./middlewares/validate-request.middle";
 //utils
 export * from "./utils/build-sql.utils";
 export * from "./utils/html-escape.utils";
