@@ -4,7 +4,7 @@ export class BadRequestError extends CustomError {
   statusCode = 400;
 
   constructor(message?: string, private fields?: string[]) {
-    super(message ? message : "Unauthorized");
+    super(message ? message : "Invalid request");
     Object.setPrototypeOf(this, BadRequestError.prototype);
   }
 
