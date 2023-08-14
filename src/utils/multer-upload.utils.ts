@@ -17,11 +17,12 @@ export const multerUpload = multer({
     if (
       file.mimetype === "image/jpg" ||
       file.mimetype === "image/png" ||
-      file.mimetype === "image/jpeg"
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "application/pdf"
     ) {
       cb(null, true);
     } else {
-      cb(new BadRequestError("file type not allowed"));
+      cb(new BadRequestError("ফাইল প্রকার অনুমোদিত নয়"));
     }
   },
 });
